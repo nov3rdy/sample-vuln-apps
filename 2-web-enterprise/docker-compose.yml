@@ -39,8 +39,6 @@ services:
       - MYSQL_USER=companyhub
       - MYSQL_PASSWORD=companyhub
       - MYSQL_ROOT_PASSWORD=root
-    ports:
-      - "3307:3306"
     volumes:
       - mysqldata:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
