@@ -1,0 +1,409 @@
+{
+	"info": {
+		"name": "Bookmarks & Categories API",
+		"description": "CRUD API for managing bookmarks and categories. Built with Fastify and PostgreSQL. Uses JWT authentication.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:60011"
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	],
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const res = pm.response.json();",
+									"if (res.token) {",
+									"    pm.collectionVariables.set('token', res.token);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@example.com\",\n\t\"password\": \"mypassword123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": ["{{base_url}}"],
+							"path": ["register"]
+						},
+						"description": "Creates a new user account and returns a JWT token. The token is automatically saved to the collection variable."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const res = pm.response.json();",
+									"if (res.token) {",
+									"    pm.collectionVariables.set('token', res.token);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@example.com\",\n\t\"password\": \"mypassword123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": ["{{base_url}}"],
+							"path": ["login"]
+						},
+						"description": "Authenticates and returns a JWT token. The token is automatically saved to the collection variable."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bookmarks",
+			"item": [
+				{
+					"name": "Create Bookmark",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Fastify Docs\",\n\t\"url\": \"https://fastify.dev\",\n\t\"description\": \"Official Fastify documentation\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/bookmarks",
+							"host": ["{{base_url}}"],
+							"path": ["bookmarks"]
+						},
+						"description": "Creates a new bookmark.\n\n**Required fields:** `title`, `url`\n**Optional fields:** `description`"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Bookmarks",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/bookmarks",
+							"host": ["{{base_url}}"],
+							"path": ["bookmarks"]
+						},
+						"description": "Retrieves all bookmarks for the authenticated user, sorted by creation date (newest first)."
+					},
+					"response": []
+				},
+				{
+					"name": "Search Bookmarks",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/bookmarks/search?q=fastify",
+							"host": ["{{base_url}}"],
+							"path": ["bookmarks", "search"],
+							"query": [
+								{
+									"key": "q",
+									"value": "fastify"
+								}
+							]
+						},
+						"description": "Searches bookmarks by title or URL. Query parameter `q` is required."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bookmark by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/bookmarks/1",
+							"host": ["{{base_url}}"],
+							"path": ["bookmarks", "1"]
+						},
+						"description": "Retrieves a single bookmark by its ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Bookmark",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Fastify Documentation\",\n\t\"description\": \"Updated description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/bookmarks/1",
+							"host": ["{{base_url}}"],
+							"path": ["bookmarks", "1"]
+						},
+						"description": "Updates an existing bookmark. All fields are optional — only provided fields will be updated."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Bookmark",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/bookmarks/1",
+							"host": ["{{base_url}}"],
+							"path": ["bookmarks", "1"]
+						},
+						"description": "Deletes a bookmark by its ID. Returns 204 No Content on success."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Documentation\",\n\t\"color\": \"#3B82F6\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": ["{{base_url}}"],
+							"path": ["categories"]
+						},
+						"description": "Creates a new category.\n\n**Required fields:** `name`\n**Optional fields:** `color` (hex color code, e.g. `#FF5733`)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": ["{{base_url}}"],
+							"path": ["categories"]
+						},
+						"description": "Retrieves all categories sorted by creation date (newest first)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/categories/1",
+							"host": ["{{base_url}}"],
+							"path": ["categories", "1"]
+						},
+						"description": "Retrieves a single category by its ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Docs & References\",\n\t\"color\": \"#8B5CF6\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categories/1",
+							"host": ["{{base_url}}"],
+							"path": ["categories", "1"]
+						},
+						"description": "Updates an existing category. All fields are optional — only provided fields will be updated."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/categories/1",
+							"host": ["{{base_url}}"],
+							"path": ["categories", "1"]
+						},
+						"description": "Deletes a category by its ID. Returns 204 No Content on success."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/stats",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "stats"]
+						},
+						"description": "Returns database version and row counts for all tables. Requires admin token."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

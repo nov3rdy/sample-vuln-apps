@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="tests/bootstrap.php"
+    colors="true"
+    failOnWarning="false"
+    cacheResult="false"
+    stopOnFailure="false">
+    <php>
+        <env name="BASE_URL" value="http://web"/>
+        <env name="DB_HOST" value="db"/>
+        <env name="DB_NAME" value="companyhub"/>
+        <env name="DB_USER" value="companyhub"/>
+        <env name="DB_PASS" value="companyhub"/>
+    </php>
+    <testsuites>
+        <testsuite name="CompanyHub">
+            <directory>tests</directory>
+            <exclude>tests/bootstrap.php</exclude>
+            <exclude>tests/TestCase.php</exclude>
+        </testsuite>
+    </testsuites>
+</phpunit>
