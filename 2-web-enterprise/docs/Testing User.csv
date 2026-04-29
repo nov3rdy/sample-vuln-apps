@@ -1,0 +1,6 @@
+email,password,role
+admin@companyhub.local,admin123,admin
+alice@companyhub.local,password1,user
+bob@companyhub.local,qwerty,user
+carol@companyhub.local,sunshine,user
+dave@companyhub.local,letmein,user

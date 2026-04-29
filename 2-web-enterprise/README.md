@@ -152,7 +152,10 @@ Sample logins (printed by `make seed`):
 ├── tests/                    # PHPUnit (controller tests + VulnerabilitiesTest)
 ├── docs/
 │   ├── SRS.md                # Software Requirements Specification (CHUB-SRS-002 v2.1)
-│   └── IFA.md                # Interface Agreement / API contract (CHUB-IFA-002 v2.1)
+│   ├── IFA.md                # Interface Agreement / API contract  (CHUB-IFA-002 v2.1)
+│   ├── User Matrix.md        # User Access Matrix                  (CHUB-UMX-002 v2.1)
+│   ├── UAT Plan.md           # User Acceptance Testing Plan        (CHUB-UAT-002 v2.1)
+│   └── Testing User.csv      # List of seeded test accounts
 ├── composer.json             # Pins outdated phpmailer
 ├── docker-compose.yml        # web (nginx) + app (php-fpm) + db (mysql)
 ├── Dockerfile                # php:8.2-fpm-alpine + extensions
